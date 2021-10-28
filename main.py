@@ -52,9 +52,8 @@ def start(default):
         receive_file(conn, "imagen-recibida.png")
         print("Archivo recibido.")
 
-while True:
-    default = input("Select you default folder. (./ is this folder: )")
-    start(default)
+default = input("Select you default folder example: ./example/example.txt \n ==>")
+start(default)
 print("Conexión cerrada.")
 
 
