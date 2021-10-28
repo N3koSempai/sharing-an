@@ -42,8 +42,11 @@ def start(default):
     try:    
         os.chdir(default)
     except FileNotFoundError:
-        default = os.path.realpath(__file__)
-        os.chdir(default)
+        os.chdir(os.path.dirname(os.path.realpath(__file__)))
+        print("the directory not exist , local directory set by default")
+    except NotADirectoryError:
+        os.chdir(os.path.dirname(os.path.realpath(__file__)))
+        print("the directory not exist , local directory set by default")
     with socket.create_server(("localhost", 6190)) as server:
         print("Esperando al cliente...")
         conn, address = server.accept()
@@ -51,6 +54,7 @@ def start(default):
         print("Recibiendo archivo...")
         receive_file(conn, "imagen-recibida.png")
         print("Archivo recibido.")
+
 
 default = input("Select you default folder example: ./example/example.txt \n ==>")
 start(default)
