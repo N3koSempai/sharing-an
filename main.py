@@ -1,6 +1,7 @@
 # server.py
 import socket
 import struct
+import os
 def receive_file_size(sck: socket.socket):
     # Esta función se asegura de que se reciban los bytes
     # que indican el tamaño del archivo que será enviado,
@@ -33,11 +34,33 @@ def receive_file(sck: socket.socket, filename):
             if chunk:
                 f.write(chunk)
                 received_bytes += len(chunk)
-with socket.create_server(("localhost", 6190)) as server:
-    print("Esperando al cliente...")
-    conn, address = server.accept()
-    print(f"{address[0]}:{address[1]} conectado.")
-    print("Recibiendo archivo...")
-    receive_file(conn, "imagen-recibida.png")
-    print("Archivo recibido.")
+                
+                
+def start(default):
+    if default == None:
+        default = os.path.realpath(__file__)
+    try:    
+        os.chdir(default)
+    except FileNotFoundError:
+        default = os.path.realpath(__file__)
+        os.chdir(default)
+    with socket.create_server(("localhost", 6190)) as server:
+        print("Esperando al cliente...")
+        conn, address = server.accept()
+        print(f"{address[0]}:{address[1]} conectado.")
+        print("Recibiendo archivo...")
+        receive_file(conn, "imagen-recibida.png")
+        print("Archivo recibido.")
+
+while True:
+    default = input("Select you default folder. (./ is this folder: )")
+    start(default)
 print("Conexión cerrada.")
+
+
+
+
+
+
+
+

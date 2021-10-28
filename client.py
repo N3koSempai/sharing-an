@@ -3,6 +3,8 @@ import os
 import socket
 import struct
 
+
+
 def send_file(sck: socket.socket, filename):
     # Obtener el tamaño del archivo a enviar.
     filesize = os.path.getsize(filename)
@@ -22,9 +24,19 @@ def start(file):
         print("Enviado.")
 
 while True:
-    file = input("ingresa direccion del archivo")
+    file = input("Enter the url and the name of your file with extension example: ./example.exa \n ==> ")
     
-    x= input("escribe yes para enviar un archivo")
-    if x == "yes":
+    x= input("write yes for send or anything for cancel \n ==> ")
+    if x == "yes" or x == "y":
         start(file)
+    else:
+        break
 print("Conexión cerrada.")
+
+
+
+
+
+
+
+
