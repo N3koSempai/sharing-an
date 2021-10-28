@@ -2,6 +2,7 @@
 import os
 import socket
 import struct
+
 def send_file(sck: socket.socket, filename):
     # Obtener el tamaño del archivo a enviar.
     filesize = os.path.getsize(filename)
@@ -12,9 +13,18 @@ def send_file(sck: socket.socket, filename):
     with open(filename, "rb") as f:
         while read_bytes := f.read(1024):
             sck.sendall(read_bytes)
-with socket.create_connection(("localhost", 6190)) as conn:
-    print("Conectado al servidor.")
-    print("Enviando archivo...")
-    send_file(conn, "imagen.png")
-    print("Enviado.")
+    
+def start(file):    
+    with socket.create_connection(("localhost", 6190)) as conn:
+        print("Conectado al servidor.")
+        print("Enviando archivo...")
+        send_file(conn, file)
+        print("Enviado.")
+
+while True:
+    file = input("ingresa direccion del archivo")
+    
+    x= input("escribe yes para enviar un archivo")
+    if x == "yes":
+        start(file)
 print("Conexión cerrada.")
